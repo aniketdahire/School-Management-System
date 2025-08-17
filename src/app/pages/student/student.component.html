@@ -1,0 +1,295 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Student Management</h2>
+
+  <!-- Add Button -->
+  <div class="mb-3 text-end">
+    <button
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#addModal"
+    >
+      ➕ Add Student
+    </button>
+  </div>
+
+  <!-- Students Table -->
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Fees</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stud of arr">
+        <td>{{ stud.id }}</td>
+        <td>{{ stud.name }}</td>
+        <td>{{ stud.course }}</td>
+        <td>{{ stud.fees }}</td>
+        <td class="text-center">
+          <!-- View -->
+          <button
+            class="btn btn-info btn-sm me-1"
+            (click)="openViewModal(stud)"
+            data-bs-toggle="modal"
+            data-bs-target="#viewModal"
+          >
+            👁 View
+          </button>
+
+          <!-- Edit -->
+          <button
+            class="btn btn-warning btn-sm me-1"
+            (click)="openEditModal(stud)"
+            data-bs-toggle="modal"
+            data-bs-target="#editModal"
+          >
+            ✏ Edit
+          </button>
+
+          <!-- Delete -->
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="openDeleteModal(stud)"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal"
+          >
+            🗑 Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!--  Add Modal  -->
+<div
+  class="modal fade"
+  id="addModal"
+  tabindex="-1"
+  aria-labelledby="addModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add Student</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label>Name:</label>
+            <input
+              type="text"
+              [(ngModel)]="newStudent.name"
+              name="name"
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label>Course:</label>
+            <input
+              type="text"
+              [(ngModel)]="newStudent.course"
+              name="course"
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label>Fees:</label>
+            <input
+              type="number"
+              [(ngModel)]="newStudent.fees"
+              name="fees"
+              class="form-control"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="addStudent()"
+          data-bs-dismiss="modal"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Edit Modal -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="editModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="editStudent">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Student</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label>Name:</label>
+            <input
+              type="text"
+              [(ngModel)]="editStudent.name"
+              name="editName"
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label>Course:</label>
+            <input
+              type="text"
+              [(ngModel)]="editStudent.course"
+              name="editCourse"
+              class="form-control"
+            />
+          </div>
+          <div class="mb-3">
+            <label>Fees:</label>
+            <input
+              type="number"
+              [(ngModel)]="editStudent.fees"
+              name="editFees"
+              class="form-control"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning"
+          (click)="applyEdit()"
+          data-bs-dismiss="modal"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- View Modal  -->
+<div
+  class="modal fade"
+  id="viewModal"
+  tabindex="-1"
+  aria-labelledby="viewModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="viewStudentData">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewModalLabel">Student Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p><b>ID:</b> {{ viewStudentData.id }}</p>
+        <p><b>Name:</b> {{ viewStudentData.name }}</p>
+        <p><b>Course:</b> {{ viewStudentData.course }}</p>
+        <p><b>Fees:</b> {{ viewStudentData.fees }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- delete model -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="deleteStudent">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <b>{{ deleteStudent.name }}</b
+        >?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDelete()"
+          data-bs-dismiss="modal"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+ 
+</div>
+
+ <!-- toast-msg -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div
+      class="toast align-items-center text-white bg-success border-0"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      #successToast
+    >
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ toastMessage }}
+        </div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+  </div>

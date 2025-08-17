@@ -67,11 +67,7 @@ export class LoginComponent {
       
 
       const isUserFound = users.find((m: login) => {
-        console.log('Entered Email:', this.login.email);
-        console.log('Entered Role:', this.login.role);
-        console.log('Entered Password:', this.login.password);
-
-        return (
+          return (
           m.email === this.login.email &&
           m.password === this.login.password &&
           m.role === this.login.role

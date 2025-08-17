@@ -5,6 +5,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './guard/auth.guard';
 import { SignupComponent } from './pages/signup/signup.component';
 import { StudentComponent } from './pages/student/student.component';
+import { TeacherComponent } from './pages/teacher/teacher.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 export const routes: Routes = [
   {
@@ -37,4 +39,14 @@ export const routes: Routes = [
     component: StudentComponent,
     canActivate: [authGuard],
   },
+  {
+    path: 'teacher',
+    component:TeacherComponent,
+    canActivate:[authGuard],
+  },
+  {
+    path: 'admin',
+    component:AdminComponent,
+    canActivate:[authGuard],
+  }
 ];
